@@ -1,0 +1,37 @@
+version: '3.3'
+
+services:
+  bb-db:
+    image: bb-db:latest
+    networks:
+      - bb-net
+
+  bb-app:
+    image: bb-app:latest
+    networks:
+      - bb-net
+
+  bb-proxy:
+    image: bb-proxy:latest
+    ports:
+      - "80:80"
+    networks:
+      - bb-net
+    deploy:
+      mode: replicated
+      replicas: 3
+
+  bb-metrics:
+    image: bb-metrics:latest
+    networks:
+      - bb-net
+
+  bb-dashboard:
+    image: bb-dashboard:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - bb-net
+
+networks:
+  bb-net:
